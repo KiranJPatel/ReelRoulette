@@ -257,6 +257,54 @@ already-small sources. The same aspect-safe letterboxing logic now also
 powers Batch Export below, where it matters even more: combining clips of
 different shapes into one video requires it.
 
+**Addendum — a full responsive/declutter sweep,** aimed at large modern
+phones (Galaxy S25/S26 Ultra, iPhone Pro Max), iPad, and laptop:
+
+- **The real decluttering fix: collapsible sidebar cards.** The sidebar
+  had grown to 10 always-fully-expanded cards — technically everything
+  fit on a big phone screen, but "fits" and "doesn't feel cluttered"
+  aren't the same thing. Every card's title now toggles it open/closed
+  (tap, or Enter/Space for keyboard users), state is remembered, and on a
+  phone's *first* visit a sensible subset (Randomization, Style Presets,
+  Focus Mode, Session Recap, Background Audio, Playlist — the settings
+  you set once and forget) starts collapsed, while the cards people
+  actually look at (Playback, Library, Saved Clips, Recently Played)
+  stay open. Desktop is unaffected — everything still opens expanded by
+  default there, exactly as before. Verified with tests covering both
+  default states, click *and* keyboard toggling, persistence, and a real
+  bug this caught before it shipped (below).
+- **Bug caught by that same work:** two cards use their own internal
+  `flex:1` layout to stretch and fill the sidebar (Recently Played,
+  Saved Clips). Collapsing either of those would have left a large,
+  mostly-empty box — the header visible, the stretch behavior still
+  active. Fixed so a collapsed card always shrinks to just its header,
+  confirmed via a computed-style check rather than a visual guess.
+- **Slideshow and Batch Export had zero phone-specific handling** — both
+  were built after the last responsive pass. Their modal/overlay content
+  now scrolls internally instead of ever being clipped on a short or
+  landscape-oriented screen, and the Batch Export "Select all / Select
+  none" buttons — which carry text, not icons — no longer use the
+  icon-sized button style they'd accidentally inherited.
+- **Sticky hover on touch.** Several hover effects (button highlights,
+  the speed pill, accent-color swatches) were unconditional CSS, so on a
+  touchscreen the "hover" look could stick after a tap until the next tap
+  elsewhere — a small but telltale sign of a desktop-first build. Now
+  scoped to `@media (hover: hover)`, so touch devices never see a stuck
+  hover state.
+- **Two iOS-specific papercuts.** Rotating an iPhone/iPad could silently
+  change the page's text scaling (Safari/WebKit's automatic text-size
+  adjustment), and swiping past the top/bottom of a scrollable panel
+  could trigger the page's native bounce/pull-to-refresh. Both disabled
+  app-wide.
+- **Header button math, re-verified.** The header grew to 6 buttons since
+  the last pass (Slideshow's icon was added). Recomputed the worst case
+  by hand: comfortably under 350px of the ~390–430px a modern phone
+  actually provides, even before the row's built-in horizontal-scroll
+  safety net.
+
+The full test suite, including nine new tests for this sweep, passes
+clean — 70 assertions total across the project, zero regressions.
+
 ## 6. How to use it
 
 ### Getting started
@@ -264,6 +312,13 @@ different shapes into one video requires it.
 2. Click **📁 Choose Video Folder** and pick a folder of videos — or click
    **🎞 Load demo clips** to try it instantly with no files of your own.
 3. Playback starts automatically (or press **Space** / tap the video).
+
+**Tip:** every sidebar card's title is a toggle — tap it to collapse or
+expand that section. On a phone, a few of the less-frequently-used ones
+(Randomization, Style Presets, Focus Mode, Session Recap, Background
+Audio, Playlist) start collapsed the first time you open the app, so the
+sidebar isn't a wall of panels; everything's still one tap away, and your
+choices are remembered after that.
 
 ### Everyday controls
 | Action | How |

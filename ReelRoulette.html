@@ -99,14 +99,14 @@
 
 /* ===== RESET ===== */
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:"Segoe UI",Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;overflow:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:"Segoe UI",Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;overflow:hidden;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none;transition:background .3s,color .3s}
 button,input,select{font-family:inherit;font-size:inherit;color:inherit}
 button{cursor:pointer;border:1px solid var(--line);background:var(--panel-2);color:var(--text);border-radius:10px;padding:9px 14px;transition:background var(--duration-small) var(--ease-standard),border-color var(--duration-small) var(--ease-standard),transform var(--duration-micro) var(--ease-out);display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;font-size:var(--text-base)}
-button:hover{border-color:var(--accent);background:var(--panel-3)}
+@media(hover:hover){button:hover{border-color:var(--accent);background:var(--panel-3)}}
 button:active{transform:scale(.96)}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
-button.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
+@media(hover:hover){button.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}}
 button.icon-only{padding:9px 11px}
 input[type=text],input[type=number],select{width:100%;background:var(--bg-2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px 11px;transition:border-color .18s}
 input[type=text]:focus,input[type=number]:focus,select:focus{outline:none;border-color:var(--accent)}
@@ -158,7 +158,7 @@ video.fade-in{opacity:1}
 .video-wrap.hide-cursor{cursor:none}
 .video-wrap.panel-hidden .overlay-bar{display:none!important}
 .overlay-bar .btn{background:none;border:none;padding:6px 8px;border-radius:8px;color:var(--text);font-size:16px;transition:background .15s}
-.overlay-bar .btn:hover{background:rgba(255,255,255,.1)}
+@media(hover:hover){.overlay-bar .btn:hover{background:rgba(255,255,255,.1)}}
 .progress{flex:1;height:5px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.2);border-radius:99px;cursor:pointer}
 .progress::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--accent);cursor:pointer}
 .progress::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:none;cursor:pointer}
@@ -168,9 +168,9 @@ video.fade-in{opacity:1}
 .fs-actions{position:absolute;top:50%;right:16px;transform:translateY(-50%);display:none;flex-direction:column;gap:10px;z-index:6;transition:opacity .3s ease}
 .video-wrap:fullscreen .fs-actions{display:flex}
 .fs-actions .btn{background:var(--overlay-bg);border:1px solid rgba(255,255,255,.08);border-radius:50%;width:48px;height:48px;padding:0;color:#fff;font-size:18px;font-weight:600;transition:all .18s;display:grid;place-items:center}
-.fs-actions .btn:hover{background:rgba(255,255,255,.15);transform:scale(1.08)}
+@media(hover:hover){.fs-actions .btn:hover{background:rgba(255,255,255,.15);transform:scale(1.08)}}
 .fs-actions .btn.next{background:var(--accent);border-color:var(--accent)}
-.fs-actions .btn.next:hover{background:var(--accent-2)}
+@media(hover:hover){.fs-actions .btn.next:hover{background:var(--accent-2)}}
 
 /* Fullscreen title overlay — hidden in fullscreen per request */
 .fs-title{display:none!important}
@@ -205,7 +205,14 @@ aside.side::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
   .mode-toggle{flex-direction:column}
   .accent-row{flex-wrap:wrap}
 }
-.card h3{margin:0 0 14px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+.card h3{margin:-4px -4px 10px;padding:8px 4px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:20px;border-radius:8px;transition:background var(--duration-small) var(--ease-standard)}
+@media(hover:hover){.card h3:hover{background:var(--panel-2)}}
+.card h3:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.card h3::after{content:"";width:8px;height:8px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg);transition:transform var(--duration-small) var(--ease-standard);flex-shrink:0}
+.card.collapsed h3{margin-bottom:0}
+.card.collapsed h3::after{transform:rotate(-45deg)}
+.card.collapsed>*:not(h3){display:none}
+.card.collapsed{flex:0 0 auto!important;min-height:0!important}
 .row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
 .row>*:first-child{flex:1}
 label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px;font-weight:500}
@@ -244,9 +251,9 @@ footer{padding:9px max(18px,env(safe-area-inset-right,0)) max(9px,env(safe-area-
 footer kbd{background:var(--panel-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-family:inherit;font-size:10px}
 
 /* ===== MODAL ===== */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50;opacity:0;visibility:hidden;transition:opacity var(--duration-medium) var(--ease-standard),visibility 0s linear var(--duration-medium)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top,0)) max(20px,env(safe-area-inset-right,0)) max(20px,env(safe-area-inset-bottom,0)) max(20px,env(safe-area-inset-left,0));z-index:50;opacity:0;visibility:hidden;transition:opacity var(--duration-medium) var(--ease-standard),visibility 0s linear var(--duration-medium)}
 .modal.open{opacity:1;visibility:visible;transition-delay:0s}
-.modalbox{width:min(580px,100%);background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);transform:translateY(16px) scale(.98);opacity:0;transition:transform var(--duration-medium) var(--ease-out),opacity var(--duration-medium) var(--ease-out)}
+.modalbox{width:min(580px,100%);max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);transform:translateY(16px) scale(.98);opacity:0;transition:transform var(--duration-medium) var(--ease-out),opacity var(--duration-medium) var(--ease-out)}
 .modal.open .modalbox{transform:translateY(0) scale(1);opacity:1}
 .modalbox h2{font-size:18px;margin-bottom:6px}
 .modalbox .modal-desc{color:var(--muted);font-size:13px;margin-bottom:18px}
@@ -358,7 +365,7 @@ footer kbd{background:var(--panel-2);border:1px solid var(--line);border-radius:
    PHASE v2.0 — speed pill, gestures, transitions, thumbnails
    ===================================================================== */
 .speed-pill{position:absolute;top:14px;right:14px;z-index:7;background:var(--overlay-bg);border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:6px 13px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;user-select:none;transition:transform .15s,background .15s,opacity .3s ease}
-.speed-pill:hover{background:rgba(255,255,255,.15)}
+@media(hover:hover){.speed-pill:hover{background:rgba(255,255,255,.15)}}
 .speed-pill:active{transform:scale(.94)}
 .speed-flash{position:absolute;top:54px;right:14px;z-index:7;background:var(--accent);color:#fff;font-weight:700;font-size:13px;padding:5px 12px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;transform:translateY(-6px)}
 .speed-flash.show{opacity:1;transform:translateY(0)}
@@ -503,11 +510,11 @@ video.tr-zoom-in{transform:scale(1);opacity:1;transition:transform .32s ease,opa
    engine (mjEl/mjEl2/mjGain*) for playback so the crossfade-audio logic
    isn't duplicated.
    ===================================================================== */
-.slideshow-screen{position:absolute;inset:0;z-index:16;display:flex;align-items:center;justify-content:center;background:#05070a;color:#fff;opacity:0;visibility:hidden;transition:opacity var(--duration-medium) var(--ease-standard),visibility 0s linear var(--duration-medium);padding:max(20px,env(safe-area-inset-top,0)) max(20px,env(safe-area-inset-right,0)) max(20px,env(safe-area-inset-bottom,0)) max(20px,env(safe-area-inset-left,0))}
+.slideshow-screen{position:absolute;inset:0;z-index:16;display:flex;overflow-y:auto;overscroll-behavior:contain;background:#05070a;color:#fff;opacity:0;visibility:hidden;transition:opacity var(--duration-medium) var(--ease-standard),visibility 0s linear var(--duration-medium);padding:max(20px,env(safe-area-inset-top,0)) max(20px,env(safe-area-inset-right,0)) max(20px,env(safe-area-inset-bottom,0)) max(20px,env(safe-area-inset-left,0))}
 .slideshow-screen.open{opacity:1;visibility:visible;transition-delay:0s}
 .slide-exit{position:absolute;top:max(16px,env(safe-area-inset-top,0));right:max(16px,env(safe-area-inset-right,0));z-index:3}
 
-.slide-setup{width:min(420px,100%);text-align:center}
+.slide-setup{width:min(420px,100%);text-align:center;margin:auto;padding:36px 0 12px}
 .slide-setup h2{font-size:var(--text-xl);margin-bottom:6px}
 .slide-setup .modal-desc{color:rgba(255,255,255,.65);margin-bottom:18px}
 .slide-tabs{display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;overflow:hidden;margin-bottom:16px}
@@ -557,7 +564,7 @@ video::cue{background:rgba(0,0,0,.65);color:#fff;font-size:1.05em}
    ===================================================================== */
 .accent-row{display:flex;gap:10px;padding:4px 0}
 .accent-swatch{--sw:#5b9cff;width:32px;height:32px;padding:0;border-radius:50%;background:var(--sw);border:2px solid transparent;box-shadow:0 0 0 1px var(--line-soft) inset;flex-shrink:0;cursor:pointer;position:relative}
-.accent-swatch:hover{transform:scale(1.08)}
+@media(hover:hover){.accent-swatch:hover{transform:scale(1.08)}}
 .accent-swatch.active{border-color:var(--sw);box-shadow:0 0 0 3px var(--panel),0 0 0 5px var(--sw)}
 .accent-swatch.active::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 
@@ -587,7 +594,7 @@ video::cue{background:rgba(0,0,0,.65);color:#fff;font-size:1.05em}
 
 .recap-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
 
-.batch-select-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.batch-select-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
 .batch-select-row #batchSelectedCount{margin-left:auto;color:var(--muted);font-size:12px}
 .batch-clip-list{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;margin-bottom:14px}
 .batch-clip-row{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line-soft);cursor:pointer}
@@ -982,8 +989,8 @@ video::cue{background:rgba(0,0,0,.65);color:#fff;font-size:1.05em}
   <h2 id="batchExportTitle">🎬 Batch Export</h2>
   <p class="modal-desc">Combine several saved clips into one downloadable highlight reel. Clips of different shapes are automatically letterboxed so nothing gets stretched or cropped.</p>
   <div class="batch-select-row">
-    <button id="batchSelectAll" class="icon-only">Select all</button>
-    <button id="batchSelectNone" class="icon-only">Select none</button>
+    <button id="batchSelectAll">Select all</button>
+    <button id="batchSelectNone">Select none</button>
     <span id="batchSelectedCount"></span>
   </div>
   <div class="batch-clip-list" id="batchClipList"></div>
@@ -3676,12 +3683,50 @@ function resetCursorTimer(){
   }
 }
 
+/* =====================================================================
+   COLLAPSIBLE SIDEBAR CARDS — the main declutter mechanism. Tapping a
+   card's title toggles it; state is remembered per card. On first visit
+   only, phones default to a handful of cards collapsed (settings people
+   reach for occasionally) so the sidebar isn't a wall of open panels,
+   while tablets/desktop keep everything open as before.
+   ===================================================================== */
+const CARD_COLLAPSE_KEY=KEY+"_cardCollapse";
+const PHONE_DEFAULT_COLLAPSED=["Randomization","Style Presets","Focus / Study Mode","Session Recap","Background Audio","Playlist"];
+function initCollapsibleCards(){
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(CARD_COLLAPSE_KEY)||"null"); }catch(e){}
+  const isFirstVisit=!saved;
+  const state=saved||{};
+  document.querySelectorAll(".card").forEach(card=>{
+    const h3=card.querySelector("h3");
+    if(!h3)return;
+    const title=h3.textContent.trim();
+    if(isFirstVisit && window.innerWidth<=640 && PHONE_DEFAULT_COLLAPSED.includes(title)){
+      state[title]=true;
+    }
+    card.classList.toggle("collapsed",!!state[title]);
+    h3.setAttribute("role","button");
+    h3.setAttribute("tabindex","0");
+    h3.setAttribute("aria-expanded",String(!state[title]));
+    const toggle=()=>{
+      const collapsed=card.classList.toggle("collapsed");
+      h3.setAttribute("aria-expanded",String(!collapsed));
+      state[title]=collapsed;
+      safeLocalStorageSet(CARD_COLLAPSE_KEY,JSON.stringify(state));
+    };
+    h3.addEventListener("click",toggle);
+    h3.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); } });
+  });
+  if(isFirstVisit) safeLocalStorageSet(CARD_COLLAPSE_KEY,JSON.stringify(state));
+}
+
 /* ===== INIT ===== */
 renderFilterStrip();
 renderOverlayToggles();
 renderPlaylist();
 loadSettings();
 restoreLastBgTrack();
+initCollapsibleCards();
 
 </script>
 </body>
